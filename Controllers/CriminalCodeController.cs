@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using CriminalCode.API.Models;
 using CriminalCode.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CriminalCode.API.Controllers
 {
@@ -12,9 +10,16 @@ namespace CriminalCode.API.Controllers
     [ApiController]
     public class CriminalCodeController : DefaultController<CriminalCodes, CriminalCodesRepository>
     {
+        private readonly CriminalCodesRepository repository;
         public CriminalCodeController(CriminalCodesRepository repository) : base(repository)
         {
+            this.repository = repository;
+        }
 
+        [HttpPost]
+        [Authorize]
+        public async override Task<ActionResult<CriminalCodes>> Post(CriminalCodes entity) {
+            return await repository.AddCriminalCode(entity);
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CriminalCode.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Cors;
 
 namespace CriminalCode.API.Controllers
 {
@@ -29,7 +28,6 @@ namespace CriminalCode.API.Controllers
                 return NotFound(new { message = "Usuário ou senha inválidos" });
             
             var token = TokenService.GenerateToken(user);
-            entity.Password = "";
 
             return new 
             {
@@ -47,7 +45,7 @@ namespace CriminalCode.API.Controllers
                 return BadRequest(new { message = "Já existe um usuário com o mesmo Nome." });
 
             await usersRepository.Add(entity);
-            return CreatedAtAction("Get", new { id = entity.Id }, entity);
+            return Ok(entity);
         }
 
         [HttpGet]
