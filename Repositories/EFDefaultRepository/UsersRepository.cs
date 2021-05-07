@@ -2,6 +2,7 @@ using System.Linq;
 using CriminalCode.API.Models;
 using CriminalCode.API.Repositories.EFDefaultRepository;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CriminalCode.API.Repositories
 {
@@ -13,18 +14,18 @@ namespace CriminalCode.API.Repositories
             this.context = context;
         }
 
-        public User loginUser(User user)
+        public async Task<User> loginUser(User user)
         {
-            return context.Users
+            return await context.Users
                         .Where(u => u.UserName == user.UserName &&
                                     u.Password == user.Password)
-                        .FirstOrDefault<User>();
+                        .SingleAsync();
         }
 
-        public User findUserByUserName(string userName) {
-            return context.Users
+        public async Task<User> findUserByUserName(string userName) {
+            return await context.Users
                         .Where(u => u.UserName == userName)
-                        .FirstOrDefault<User>();
+                        .SingleAsync();
         }
     }
 }

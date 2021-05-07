@@ -53,6 +53,12 @@ namespace CriminalCode.API
                     ValidateAudience = false
                 };
             });
+            services.AddCors(c => {
+                c.AddPolicy("CorsPolicy", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +70,8 @@ namespace CriminalCode.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CriminalCode.API v1"));
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 

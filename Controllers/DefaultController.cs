@@ -24,7 +24,7 @@ namespace CriminalCode.API.Controllers
         // GET: api/[controller]
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<TEntity>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<TEntity>>> Get()
         {
             return await repository.GetAll();
         }
@@ -32,7 +32,7 @@ namespace CriminalCode.API.Controllers
         // GET: api/[controller]/5
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<TEntity>> Get(int id)
+        public virtual async Task<ActionResult<TEntity>> Get(int id)
         {
             var entity = await repository.Get(id);
             if (entity == null)
@@ -45,7 +45,7 @@ namespace CriminalCode.API.Controllers
         // PUT: api/[controller]/5
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> Put(int id, TEntity entity)
+        public virtual async Task<IActionResult> Put(int id, TEntity entity)
         {
             if (id != entity.Id)
             {
@@ -58,7 +58,7 @@ namespace CriminalCode.API.Controllers
         // POST: api/[controller]
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<TEntity>> Post(TEntity entity)
+        public virtual async Task<ActionResult<TEntity>> Post(TEntity entity)
         {
             await repository.Add(entity);
             return CreatedAtAction("Get", new { id = entity.Id }, entity);
@@ -67,7 +67,7 @@ namespace CriminalCode.API.Controllers
         // DELETE: api/[controller]/5
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult<TEntity>> Delete(int id)
+        public virtual async Task<ActionResult<TEntity>> Delete(int id)
         {
             var entity = await repository.Delete(id);
             if (entity == null)
